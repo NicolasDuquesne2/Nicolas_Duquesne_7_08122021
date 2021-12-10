@@ -1,0 +1,43 @@
+body {
+    font-family: 'Lato', sans-serif !important;
+}
+
+.logo-title {
+    font-family: 'DM Sans', sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 36px !important;
+    color: #D04F4F !important;
+}
+
+.form-control {
+    height: unset !important;
+    font-size: 1.1rem !important;
+    background: #E7E7E7 !important;
+}
+
+.input-group-text {
+    background: #E7E7E7 !important;
+}
+
+.dropdown-toggle::after {
+    display: none !important;
+}
+
+#button-1 {
+    background: #3282F7 !important;
+    color: white !important;
+}
+
+#button-2 {
+    background: #68D9A4 !important;
+    color: white !important;
+}
+
+#button-3 {
+    background: #ED6454 !important;
+    color: white !important;
+}
+
+.text-Roboto {
+    font-family: 'Roboto' !important;
+}
