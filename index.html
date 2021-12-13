@@ -19,7 +19,11 @@
                     <a><img src="/image/logovect.svg" alt="logo"></a>
                     <h1 class="logo-title">Les petits plats</h1>
                     <div class="input-group pb-3">
-                        <input type="text" class="form-control border-0 pt-3 pb-3" placeholder="Rechercher un ingrédient, appareil, ustensiles ou une recette" aria-label="Rechercher un ingrédient, appareil, ustensiles ou une recette" aria-describedby="basic-addon1">
+                        <input type="text" class="form-control border-0 pt-3 pb-3" 
+                        placeholder="Rechercher un ingrédient, appareil, ustensiles ou une recette" 
+                        aria-label="Rechercher un ingrédient, appareil, ustensiles ou une recette" 
+                        aria-describedby="basic-addon1"
+                        onkeyup="return application.searchBar.onKeyUp(event)">
                         <div class="input-group-append">
                             <span class="input-group-text border-0" id="basic-addon3"><img src="/image/searchvect.svg" alt="Rechercher"></span>
                         </div>
@@ -65,9 +69,6 @@
     crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" 
     crossorigin="anonymous"></script>
-    <script src="/data/recipes.js"></script>
-    <script src="/javascript/model/recipe.js"></script>
-    <script src="/javascript/templates/recipcard.js"></script>
-    <script src="/javascript/app.js"></script>
+    <script src="/javascript/app.js" type="module"></script>
 </body>
 </html>
