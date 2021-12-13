@@ -15,7 +15,7 @@ class RecipCard {
         htmlCard += `   <img class="h-50" src="https://via.placeholder.com/150" alt="">
                         <div class="card-body ">
                             <div class="row">
-                                <div class="col">
+                                <div class="col-8">
                                     <p class="text-left normal-font">
                                         ${this._recipe.name}
                                     </p>
@@ -36,7 +36,7 @@ class RecipCard {
         htmlCard +=                 `</p>
                                 </div>
                                 <div class="col">
-                                    <p class="text-left text-Roboto tiny-font lh-100">
+                                    <p class="text-left text-Roboto tiny-font lh-100 text-trunc">
                                         ${this._recipe.description}
                                     </p>
                                 </div>
