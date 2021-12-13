@@ -12,9 +12,9 @@
     <title>Les petits plats</title>
 </head>
 <body>
-    <div class="container mt-5">
+    <div class="container mt-5 p-0 ml-auto mr-auto">
         <div class="row">
-            <div class="col">
+            <div class="col p-0">
                 <div class="text-center">
                     <a><img src="/image/logovect.svg" alt="logo"></a>
                     <h1 class="logo-title">Les petits plats</h1>
@@ -28,7 +28,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col">
+            <div class="col p-0">
                 <div class="btn-group mr-2">
                     <button type="button" id="button-1" class="btn btn-lg dropdown-toggle pt-3 pb-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       Ingrédient <img class="ml-5" src="/image/chevronvect.svg">
@@ -56,51 +56,50 @@
                 </div>
             </div>
         </div>
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            <div class="card shadow-sm">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 d-flex justify-content-between mt-4">
+            <div class="card shadow-sm mb-4" style="max-width: 380px;">
+                <div class="card-body" style="max-width: 380px;"></div>
+            </div>
+            <div class="card shadow-sm mb-4" style="max-width: 380px;">
                 <div class="card-body"></div>
             </div>
-            <div class="card shadow-sm">
+            <div class="card shadow-sm mb-4" style="max-width: 380px;">
                 <div class="card-body"></div>
             </div>
-            <div class="card shadow-sm">
+            <div class="card shadow-sm mb-4" style="max-width: 380px;">
                 <div class="card-body"></div>
             </div>
-            <div class="card shadow-sm">
+            <div class="card shadow-sm mb-4" style="max-width: 380px;">
                 <div class="card-body"></div>
             </div>
-            <div class="card shadow-sm">
-                <div class="card-body"></div>
-            </div>
-            <div class="card shadow-sm">
-                
+            <div class="card shadow-sm mb-4" style="max-width: 380px;">
                 <img class="h-50" src="https://via.placeholder.com/150" alt="">
-                <div class="card-body">
+                <div class="card-body ">
                     <div class="row">
                         <div class="col">
-                            <p class="text-left">
+                            <p class="text-left normal-font">
                                 Limonade de coco
                             </p>
                         </div>
-                        <div class="col">
+                        <div class="col normal-font">
                             <p class="text-right">
                                 <img src="/image/clockvect.svg" alt="temps préparation">
-                                10mins
+                                <span class="font-weight-bolder">10 min</span>
                             </p>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
-                            <p class="text-left">
-                                Lait de coco: 400ml
-                                Jus de citron: 2
-                                Créme de coco: 4 cuillères
-                                Sucre: 20g
-                                Glaçons: 2
+                            <p class="text-left tiny-font">
+                                <span class="font-weight-bolder">Lait de coco: </span>400ml<br>
+                                <span class="font-weight-bolder">Jus de citron: </span>2<br>
+                                <span class="font-weight-bolder">Crème de coco: </span>4 cuillères<br>
+                                <span class="font-weight-bolder">Sucre: </span> 20g<br>
+                                <span class="font-weight-bolder">Glaçons: </span>2<br>
                             </p>
                         </div>
                         <div class="col">
-                            <p class="text-left text-Roboto">
+                            <p class="text-left text-Roboto tiny-font lh-100">
                                 Mettre les glaçons à votre goût 
                                 dans le blender, ajouter le lait, 
                                 la crème de coco, 

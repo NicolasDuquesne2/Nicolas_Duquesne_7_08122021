@@ -2,6 +2,10 @@ body {
     font-family: 'Lato', sans-serif !important;
 }
 
+.container {
+    max-width: 1240px !important;
+}
+
 .logo-title {
     font-family: 'DM Sans', sans-serif !important;
     font-weight: 700 !important;
@@ -40,4 +44,16 @@ body {
 
 .text-Roboto {
     font-family: 'Roboto' !important;
+}
+
+.tiny-font {
+    font-size: 0.8rem !important;
+}
+
+.normal-font {
+    font-size: 1.1rem;
+}
+
+.lh-100 {
+    line-height: 1 !important;
 }
