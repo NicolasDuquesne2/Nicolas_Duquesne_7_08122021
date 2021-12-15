@@ -19,11 +19,12 @@
                     <a><img src="/image/logovect.svg" alt="logo"></a>
                     <h1 class="logo-title">Les petits plats</h1>
                     <div class="input-group pb-3">
-                        <input type="text" class="form-control border-0 pt-3 pb-3" 
+                        <input type="text"
+                        id="main-search-bar"
+                        class="form-control border-0 pt-3 pb-3" 
                         placeholder="Rechercher un ingrédient, appareil, ustensiles ou une recette" 
                         aria-label="Rechercher un ingrédient, appareil, ustensiles ou une recette" 
-                        aria-describedby="basic-addon1"
-                        onkeyup="return application.searchBar.onKeyUp(event)">
+                        aria-describedby="basic-addon1">
                         <div class="input-group-append">
                             <span class="input-group-text border-0" id="basic-addon3"><img src="/image/searchvect.svg" alt="Rechercher"></span>
                         </div>
@@ -37,7 +38,7 @@
                     <button type="button" id="button-1" class="btn btn-lg dropdown-toggle pt-3 pb-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       Ingrédient <img class="ml-5" src="/image/chevronvect.svg">
                     </button>
-                    <div class="dropdown-menu">
+                    <div class="dropdown-menu" id="dropdown-ingredients">
                       <a class="dropdown-item" href="#">Action</a>
                       <a class="dropdown-item" href="#">Another action</a>
                       <a class="dropdown-item" href="#">Something else here</a>
@@ -48,14 +49,14 @@
                     <button type="button" id="button-2" class="btn btn-lg dropdown-toggle pt-3 pb-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       Appareil <img class="ml-5" src="/image/chevronvect.svg">
                     </button>
-                    <div class="dropdown-menu">
+                    <div class="dropdown-menu" id="dropdown-tools">
                     </div>
                 </div>
                 <div class="btn-group mr-2">
                     <button type="button" id="button-3" class="btn btn-lg dropdown-toggle pt-3 pb-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       Ustensile <img class="ml-5" src="/image/chevronvect.svg">
                     </button>
-                    <div class="dropdown-menu">
+                    <div class="dropdown-menu" id="dropdown-ustensiles">
                     </div>
                 </div>
             </div>

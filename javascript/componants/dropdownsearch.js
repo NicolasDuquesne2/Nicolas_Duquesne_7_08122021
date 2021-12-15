@@ -1,8 +1,9 @@
 export class DropDownSearchBar {
-    constructor(parent, htmlObject, name) {
+    constructor(parent, htmlObject, name, data) {
         this._parent = parent;
         this._htmlObject = htmlObject;
         this._name = name;
+        this._data = data;
     }
 
     get parent() {

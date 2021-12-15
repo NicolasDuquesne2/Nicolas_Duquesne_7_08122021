@@ -3,11 +3,12 @@ import { SearchBar } from "./componants/searchbar.js";
 import { DropDownSearchBar } from "./componants/dropdownsearch.js";
 import { Recipe } from "./model/recipe.js";
 import { RecipCard } from "./templates/recipcard.js";
+
 class App {
     constructor() {
         this._data = recipes;
-        this._searchbar = new SearchBar(this);
-        this._dropDownSearchBar = new DropDownSearchBar(this);
+        this._searchbar = new SearchBar(this,document.querySelector('#main-search-bar'),'mainSearchBar', recipes);
+        this._dropDownIngredients = new DropDownSearchBar(this, document.querySelector('#dropdown-ingredients'), "ingredients", recipes);
         this._cardsWrapper = document.querySelector("#cards-wrapper");
     }
 
