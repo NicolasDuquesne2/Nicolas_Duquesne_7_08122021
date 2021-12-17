@@ -1,4 +1,5 @@
 import { recipes } from "../data/recipes.js";
+import { DropDown } from "./templates/dropdown.js";
 import { MainSearchBar } from "./componants/searchbars.js";
 import { DropDownSearchBar } from "./componants/searchbars.js";
 import { Recipe } from "./model/recipe.js";
@@ -8,11 +9,8 @@ class App {
     constructor() {
         this._data = recipes;
         this._searchbar = new MainSearchBar(this,document.querySelector('#main-search-bar'),'mainSearchBar', recipes);
-        this._searchbar.htmlObject.addEventListener("keyup", this.onKeyUp);
         this._searchbar.htmlObject.parent = this._searchbar;
-        this._dropDownIngredients = new DropDownSearchBar(this, document.querySelector('#dropdown-ingredients'), "ingredients", recipes);
-        this._dropDownTools = new DropDownSearchBar(this, document.querySelector('#dropdown-tools'), 'tools', recipes);
-        this._dropDownUstensiles = new DropDownSearchBar(this, document.querySelector('#dropdown-ustensiles'), 'tools', recipes);
+        this._dropDownGroup = new DropDownSearchBar(this, document.querySelector('#dropdown-group'), recipes);
         this._cardsWrapper = document.querySelector("#cards-wrapper");
     }
 
@@ -21,43 +19,67 @@ class App {
     }
 
 
-    display (data) {
-        data.map(recipe => new Recipe(recipe));
-        data.forEach(recipe => {
-            const template = new RecipCard(recipe);
-            this._cardsWrapper.appendChild(template.build());
-        });
+    display(reportObject) {
+       reportObject.recipes.map (recipe => new Recipe(recipe));
+       reportObject.recipes.forEach(recipe => {
+           const template = new RecipCard(recipe);
+           this._cardsWrapper.appendChild(template.build());
+       });
+
+       for (let dropdownData in reportObject.dropDownsItems) {
+           let wrapper = null;
+           let template = null;
+           switch (dropdownData) {
+               case 'ingredients':
+                    wrapper = this._dropDownGroup.dropDownIngredients;
+                    template = new DropDown(reportObject.dropDownsItems[dropdownData], wrapper);
+                    break
+                case 'tools':
+                    wrapper = this._dropDownGroup.dropDownTools;
+                    template = new DropDown(reportObject.dropDownsItems[dropdownData], wrapper);
+                    break
+                case 'ustensils':
+                    wrapper = this._dropDownGroup.dropDownUstensils;
+                    template = new DropDown(reportObject.dropDownsItems[dropdownData], wrapper);
+                    break
+                default:
+           }
+           template.build();
+       }
+
     }
-querySelector
     
     refresh (value) {
-        const filtRecipes = this.searchBar.report(value);
-        this._dropDownIngredients._dropDownhtml.innerHTML = '';
-        this._dropDownTools._dropDownhtml.innerHTML = '';
-        this._dropDownUstensiles._dropDownhtml.innerHTML = '';
+        let filtRecipes = null;
+
+        if (typeof (value) === 'undefined') {
+            filtRecipes = this.searchBar.report();
+        } else {
+            filtRecipes = this.searchBar.report(value);
+        }
+        
+        this._dropDownGroup.dropDownIngredients.innerHTML = '';
+        this._dropDownGroup.dropDownTools.innerHTML = '';
+        this._dropDownGroup.dropDownUstensils.innerHTML = '';
         this._cardsWrapper.innerHTML = '';
-        console.log("display prêt à être mis à jour");
-        //this.display(filtRecipes);
+        this.display(filtRecipes);
     }
 
-    /* onKeyUp 
-    arguments :
-        event - object event
-    abastract :
-        Tests if the html object has a string length greater than 2.
-        If true, launches the update process */
-
-    onKeyUp(event) {
-        const searchBarHtml = event.target;
-        if (searchBarHtml.value.length > 2) {
-            searchBarHtml.parent.parent.refresh(searchBarHtml.value);
+    switchButtons(button) {
+        switch (button.id) {
+            case 'button-1':
+                break;
+            case 'button-2':
+                break;
+            case 'button-3':
+                break;
+            default:
         }
     }
-    
 
     main () {
-        const recipesArr = [...this._data];
-        this.display(recipesArr);
+        const filtRecipes = this.searchBar.report();
+        this.display(filtRecipes);
     }
 }
 

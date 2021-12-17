@@ -1,17 +1,17 @@
 export class DropDown {
-    constructor(data) {
+    constructor(data, wrapper) {
         this._tags = data;
+        this._wrapper = wrapper
     }
 
     build() {
 
-        const wrapper = document.createElement('div');
-        wrapper.classList.add('dropdown-menu');
-        let htmlButtons = '';
-        data.forEach(element => {
-            htmlButtons += `<button class="dropdown-item" type="button">${element}</button>`
+        this._tags.forEach(element => {
+            const button = document.createElement('button');
+            button.classList.add('dropdown-item');
+            button.type = 'button';
+            button.innerText = element;
+            this._wrapper.appendChild(button);
         });
-        wrapper.innerHTML = htmlButtons;
-        return wrapper;
     }
 }

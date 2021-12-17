@@ -12,54 +12,59 @@ export class SearchBar {
     abastract :
         selects recipes whose name or description or one of ingredient includes the value string argument.
         on success, returns an array with recipes found
-        on failure returns an array with an error message */
+        on failure returns an array with an error message 
+        if value is undefined - case where we need all recipes - returned array equales */
 
         filter(value) {
-            const recipesFiltArr = [];
+            let recipesFiltArr = [];
             const pattern = new RegExp(value, 'i');
-    
-            /* for all recipe */
-            for (let recipe of this._data) {
-                let filterValueMatches = [];
-                /* loop in recipe attributes */
-                for (let attribute in recipe) {
-                    /* check in name, description & ingredients. feeds a boolean array and leaves the for loop when a true is pushed*/
-                    if (attribute === 'name' || attribute === 'description') {
-                        const match = recipe[attribute].match(pattern);
-                            if (match) {
-                                filterValueMatches.push(true);
-                                break;
-                            } else {
-                                filterValueMatches.push(false);
+
+            if (typeof (value) != 'undefined') {
+                  /* for all recipe */
+                for (let recipe of this._data) {
+                    let filterValueMatches = [];
+                    /* loop in recipe attributes */
+                    for (let attribute in recipe) {
+                        /* check in name, description & ingredients. feeds a boolean array and leaves the for loop when a true is pushed*/
+                        if (attribute === 'name' || attribute === 'description') {
+                            const match = recipe[attribute].match(pattern);
+                                if (match) {
+                                    filterValueMatches.push(true);
+                                    break;
+                                } else {
+                                    filterValueMatches.push(false);
+                                }
+                        } else if (attribute === 'ingredients') {
+                            /* ingredients is an array */
+                            for (let ingredient of recipe[attribute]) {
+                                const str = ingredient.ingredient;
+                                const match = str.match(pattern);
+                                if (match){
+                                    filterValueMatches.push(true);
+                                    break;
+                                } else {
+                                    filterValueMatches.push(false);
+                                }
                             }
-                    } else if (attribute === 'ingredients') {
-                        /* ingredients is an array */
-                        for (let ingredient of recipe[attribute]) {
-                            const str = ingredient.ingredient;
-                            const match = str.match(pattern);
-                            if (match){
-                                filterValueMatches.push(true);
+                        }
+                    }
+                    /* the recipe checked is pushed in the return array only if there is a true value in the boolean array */
+                    if (filterValueMatches.length > 0) {
+                        for (let valueMatch of filterValueMatches) {
+                            if (valueMatch === true) {
+                                recipesFiltArr.push(recipe);
                                 break;
-                            } else {
-                                filterValueMatches.push(false);
                             }
                         }
                     }
                 }
-                /* the recipe checked is pushed in the return array only if there is a true value in the boolean array */
-                if (filterValueMatches.length > 0) {
-                    for (let valueMatch of filterValueMatches) {
-                        if (valueMatch === true) {
-                            recipesFiltArr.push(recipe);
-                            break;
-                        }
-                    }
+        
+                /* if the returned array is empty, a defaut error message is pushed */
+                if (recipesFiltArr.length === 0) {
+                    recipesFiltArr.push("no recipe found");
                 }
-            }
-    
-            /* if the returned array is empty, a defaut error message is pushed */
-            if (recipesFiltArr.length === 0) {
-                recipesFiltArr.push("no recipe found");
+            } else {
+                recipesFiltArr = this._data;
             }
     
             return recipesFiltArr
@@ -150,6 +155,7 @@ export class SearchBar {
 export class MainSearchBar extends SearchBar {
     constructor(parent, htmlObject, name, data) {
         super(parent, htmlObject, name, data);
+        this._htmlObject.addEventListener("keyup", this.onKeyUp);
     }
 
     get parent() {
@@ -204,15 +210,41 @@ export class MainSearchBar extends SearchBar {
         return super.report(value);
     }
 
+    /* onKeyUp 
+    arguments :
+        event - object event
+    abastract :
+        Tests if the html object has a string length greater than 2.
+        If true, launches the update process */
+
+        onKeyUp(event) {
+            const searchBarHtml = event.target;
+            if (searchBarHtml.value.length > 2) {
+                searchBarHtml.parent.parent.refresh(searchBarHtml.value);
+            } else {
+                searchBarHtml.parent.parent.refresh();
+            }
+        }
+
 }
 
 
 export class DropDownSearchBar {
-    constructor(parent, htmlObject, name, data) {
+    constructor(parent, htmlObject, data) {
         this._parent = parent;
         this._htmlObject = htmlObject;
-        this._dropDownhtml = this.htmlObject.querySelector('.dropdown-menu');
-        this._name = name;
+        this._ingredientsButt = this._htmlObject.querySelector('#button-1');
+        this._ingredientsButt.parent = this;
+        this._ingredientsButt.addEventListener('click',  this.onClick);
+        this._toolsButt = this._htmlObject.querySelector('#button-2');
+        this._toolsButt.parent = this;
+        this._toolsButt.addEventListener('click',  this.onClick);
+        this._ustensilsButt = this._htmlObject.querySelector('#button-3');
+        this._ustensilsButt.parent = this;
+        this._ustensilsButt.addEventListener('click',  this.onClick);
+        this._dropDownIngredients = this._htmlObject.querySelector('#dropdown-ingredients');
+        this._dropDownTools = this._htmlObject.querySelector('#dropdown-tools');
+        this._dropDownUstensils = this._htmlObject.querySelector('#dropdown-ustensils');
         this._data = data;
     }
 
@@ -228,10 +260,36 @@ export class DropDownSearchBar {
         return this._name;
     }
 
-    onKeyUp(event) {
-        const searchBar = event.target;
-        if (searchBar.value.length > 2) {
-            alert("on a 3 lettres minimum");
-        }
-    }    
+    get dropDownhtml() {
+        return this._dropDownhtml;
+    }
+
+    get ingredientsButt() {
+        return this._ingredientsButt;
+    }
+
+    get toolsButt() {
+        return this._toolsButt;
+    }
+
+    get ustensilsButt() {
+        return this._ustensilsButt
+    }
+
+    get dropDownIngredients() {
+        return this._dropDownIngredients;
+    }
+
+    get dropDownTools() {
+        return this._dropDownTools;
+    }
+
+    get dropDownUstensils() {
+        return this._dropDownUstensils;
+    }
+    
+    onClick(event) {
+        const button = event.target;
+        button.parent.parent.switchButtons(button);
+    }
 }
