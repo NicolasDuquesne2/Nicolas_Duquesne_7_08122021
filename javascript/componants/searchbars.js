@@ -134,7 +134,7 @@ export class SearchBar {
     
             const ingredientsArray = this.getUniqueInArray(ingredientsDatas);
             const toolsArray = this.getUniqueInArray(toolsDatas);
-            const ustensilsArray = this.getUniqueInArray(ustensilesDatas)
+            const ustensilsArray = this.getUniqueInArray(ustensilesDatas);
             
             return { ingredients: ingredientsArray, tools: toolsArray, ustensils: ustensilsArray};
         }
@@ -289,7 +289,7 @@ export class DropDownSearchBar {
     }
     
     onClick(event) {
-        const button = event.target;
+        const button = event.currentTarget;
         button.parent.parent.switchButtons(button);
     }
 }

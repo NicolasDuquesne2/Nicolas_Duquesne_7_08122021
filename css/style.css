@@ -27,17 +27,17 @@ body {
     display: none !important;
 }
 
-#button-1 {
+#button-1, #button-1-1, #input-ingredient, .dropdown-menu {
     background: #3282F7 !important;
     color: white !important;
 }
 
-#button-2 {
+#button-2, #button-2-2, #input-tool {
     background: #68D9A4 !important;
     color: white !important;
 }
 
-#button-3 {
+#button-3, #button-3-3, #input-ustensil {
     background: #ED6454 !important;
     color: white !important;
 }
@@ -51,7 +51,7 @@ body {
 }
 
 .normal-font {
-    font-size: 1.1rem;
+    font-size: 1.1rem !important;
 }
 
 .lh-100 {
@@ -59,10 +59,61 @@ body {
 }
 
 .text-trunc {
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 7;
-    -webkit-box-orient: vertical;
-    background:#fff;
+    overflow: hidden !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 7 !important;
+    -webkit-box-orient: vertical !important;
+    background:#fff !important;
 }
 
+.img-inv {
+    transform: rotateX(190deg) !important;
+}
+
+.dropdown-menu.show {
+    display: flex;
+    flex-wrap: wrap !important;
+    top: 98% !important;
+    transform: unset !important;
+}
+
+.dropdown-item {
+    width: 33% !important;
+    white-space:normal !important;
+}
+
+.dropdown-item:hover {
+    background-color: unset !important;
+}
+
+.dropdown-menu > button {
+    color: white !important;
+}
+
+.border-bottum-rounded {
+    border-bottom-left-radius: .25rem !important;
+    border-bottom-right-radius: .25rem !important;
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+}
+
+.border-top-rounded {
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    border-top-left-radius: .25rem !important;
+    border-top-right-radius: .25rem !important;
+}
+
+.border-top-left-rounded {
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    border-top-left-radius: .25rem !important;
+    border-top-right-radius: 0 !important;
+}
+
+.border-top-right-rounded {
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: .25rem !important;
+}
