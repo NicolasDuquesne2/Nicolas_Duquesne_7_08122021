@@ -1,5 +1,6 @@
 import { recipes } from "../data/recipes.js";
 import { DropDown } from "./templates/dropdown.js";
+import { TagButton } from "./templates/tagbutton.js";
 import { MainSearchBar, SearchBar } from "./componants/searchbars.js";
 import { DropDownSearchBar } from "./componants/searchbars.js";
 import { Recipe } from "./model/recipe.js";
@@ -19,7 +20,12 @@ class App {
         return this._searchbar;
     }
 
-
+    /* displayCards 
+    arguments :
+        reportObject - object
+    abastract :
+        for each recipe found, a Recipe object is created in order to print Recipes cards with a template */
+ 
     displayCards(reportObject) {
         this._cardsWrapper.innerHTML = '';
         reportObject.recipes.map (recipe => new Recipe(recipe));
@@ -28,6 +34,12 @@ class App {
             this._cardsWrapper.appendChild(template.build());
         });
     }
+
+    /* displayDropDowns 
+    arguments :
+        reportObject - object
+    abastract :
+        for each drop down tags lists found, matching drop downs are build with list and a template */
 
     displayDropDowns(reportObject) {
         for (let dropdownData in reportObject.dropDownsItems) {
@@ -54,7 +66,70 @@ class App {
             template.build();
         }
     }
+
+    /* displayTag 
+    arguments :
+        tagName - string
+        searchBarHtmlName - string
+    abastract :
+    displays a tag button with a tag name and a template
+    uses searchBarHtmlName to select right button color*/
+
+    displayTag(tagName, searchBarHtmlName) {
+        let buttonColorClass = '';
+
+        switch(searchBarHtmlName) {
+            case 'input-ingredient':
+                buttonColorClass = 'bg-blue';
+                break;
+            case 'input-tool':
+                buttonColorClass = 'bg-light-green';
+                break;
+            case 'input-ustensil':
+                buttonColorClass = 'bg-light-red';
+                break;
+            default:
+        }
+
+        const styles = {bgColor: buttonColorClass, fontColor: 'font-color-white'}
+
+        const wrapper = document.querySelector('#tags-wrapper');
+        const template = new TagButton(this, tagName, styles ,wrapper);
+        template.build();
+    }
+
+    /* deleteTag 
+    arguments :
+        tag - object
+    abastract :
+        deletes tag from tag list by a removeChild function
+        removes the tag from the drop dow group active tags array
+        refreshes with buttons linked to tags if remains tags in the active tags array
+        Or refresh from the main search bar for reset filters and display all recipes */
+
+    deleteTag(tag) {
+        document.querySelector('#tags-wrapper').removeChild(tag);
+        this._dropDownGroup.removeActiveTag(tag.innerText);
+        
+        if (this._dropDownGroup.activeTags.length > 0) {
+
+            this._dropDownGroup.activeTags.forEach(tag => {
+                this.refreshFromMenuButton(tag.buttObj);
+            });
+
+        } else {
+            const searchBar = document.querySelector('#main-search-bar');
+            this.refreshFromSearchBars(null, searchBar);
+        }
+    }
     
+    /* refreshFromSearchBars 
+    arguments :
+        searchBarHtmlValue - string
+        searchBarHtml - object
+    abastract :
+    */
+
     refreshFromSearchBars (searchBarHtmlValue, searchBarHtml) {
         const searchBarhtmlName = searchBarHtml.id;
         const searchBar = searchBarHtml.parent;
@@ -82,6 +157,12 @@ class App {
         }
     }
 
+    /* refreshFromSearchBars 
+    arguments :
+        button - object
+    abastract :
+    */
+
     refreshFromMenuButton(button) {
         const buttonValue = button.innerText;
         const searchbarHtml = button.searchbarhtml;
@@ -93,7 +174,20 @@ class App {
         this._cardsWrapper.innerHTML = '';
         this.displayCards(filtRecipes);
         this.displayDropDowns(filtRecipes);
+        this.displayTag(buttonValue, searchBarHtmlName);
+        this._dropDownGroup.setData(filtRecipes.recipes);
+
+        if (!this._dropDownGroup.isInObjects(buttonValue, this._dropDownGroup.activeTags, 'tagName')) {
+            this._dropDownGroup.addActiveTags({tagName: buttonValue, origin: searchBarHtmlName, buttObj: button});
+        }
     }
+
+    /* switchButtons 
+    arguments :
+        button - object
+    abastract :
+    */
+
 
     switchButtons(button) {
         let dropDown = null;
@@ -136,6 +230,12 @@ class App {
 
         
     }
+
+    /* switchButtons 
+    arguments :
+       void
+    abastract :
+    */
 
     main () {
         const filtRecipes = this.searchBar.report(undefined, 'main-search-bar');

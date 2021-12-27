@@ -27,19 +27,20 @@ body {
     display: none !important;
 }
 
-#button-1, #button-1-1, #input-ingredient, .dropdown-menu {
+.bg-blue {
     background: #3282F7 !important;
-    color: white !important;
 }
 
-#button-2, #button-2-2, #input-tool {
+.bg-light-green {
     background: #68D9A4 !important;
-    color: white !important;
 }
 
-#button-3, #button-3-3, #input-ustensil {
+.bg-light-red {
     background: #ED6454 !important;
-    color: white !important;
+}
+
+.font-color-white {
+    color: white;
 }
 
 .text-Roboto {

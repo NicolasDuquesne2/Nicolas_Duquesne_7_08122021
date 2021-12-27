@@ -259,6 +259,7 @@ export class MainSearchBar extends SearchBar {
 export class DropDownSearchBar extends SearchBar {
     constructor(parent, htmlObject, name,data) {
         super(parent, htmlObject, name, data);
+        this._activeTags = [];
         this._dropDownIngredients = this._htmlObject.querySelector('#dropdown-ingredients');
         this._dropDownIngredients.parent = this;
         this._dropDownTools = this._htmlObject.querySelector('#dropdown-tools');
@@ -325,8 +326,60 @@ export class DropDownSearchBar extends SearchBar {
         return this._dropDownUstensils;
     }
 
+    get activeTags() {
+        return this._activeTags;
+    }
+
     setData(datas) {
         this._data = datas;
+    }
+
+
+    /* isInObjects
+    arguments :
+        value - string or digit or bool
+        array - array of objects
+        attr - attribute where value is checked
+    abastract :
+        loops in the array to check with the attribute value targeted. 
+        Leaves the for statement when the value is found in the array and set the bool on true */
+
+    isInObjects(value, array, attr) {
+        let isIn = false;
+        
+        for(let i = 0; i < array.length; i++) {
+            if (array[i][attr] === value) {
+                isIn = true;
+                break;
+            }
+        }
+        return isIn;
+    }
+
+    /* addActiveTags
+    arguments :
+        tagValue - string
+    abastract :
+        adds an active tag in the active tags list
+    */
+
+    addActiveTags(tagValue) {
+        this._activeTags.push(tagValue);
+    }
+
+    /* addActiveTags
+    arguments :
+        tagValue - string
+    abastract :
+        removes a tag from the tag list
+    */
+
+    removeActiveTag(tagValue) {
+        for (let i = 0; i < this._activeTags.length; i++) {
+            if (this._activeTags[i]['tagName'] === tagValue) {
+                this._activeTags.splice(i, 1);
+            }
+        }
     }
 
     /* getUniqueInArray 
@@ -411,7 +464,7 @@ export class DropDownSearchBar extends SearchBar {
         then returns an object*/
     
     getDropDownsDatas(data) {
-        super.getDropDownsDatas(data);
+        return super.getDropDownsDatas(data);
     }
 
     /* filter 
