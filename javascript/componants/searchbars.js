@@ -21,13 +21,13 @@ export class SearchBar {
         on failure returns an array with an error message 
         if value is undefined - case where we need all recipes - returned array equales */
 
-    filter(value, searchBarhtmlName) {
+    filter(value, searchBarhtmlName, array) {
         let recipesFiltArr = [];
         const pattern = new RegExp(value, 'i');
 
         if (value != null) {
                 /* for all recipe */
-            for (let recipe of this._data) {
+            for (let recipe of array) {
                 let filterValueMatches = [];
                 /* loop in recipe attributes */
                 for (let attribute in recipe) {
@@ -90,7 +90,7 @@ export class SearchBar {
                 recipesFiltArr.push("no recipe found");
             }
         } else {
-            recipesFiltArr = this._data;
+            recipesFiltArr = array;
         }
 
         return recipesFiltArr
@@ -195,8 +195,8 @@ export class MainSearchBar extends SearchBar {
         on success, returns an array with recipes found
         on failure returns an array with an error message */
 
-    filter(value, searchBarhtmlName) {
-        return super.filter(value, searchBarhtmlName);
+    filter(value, searchBarhtmlName, array) {
+        return super.filter(value, searchBarhtmlName, array);
     }
 
      /* getUniqueInArray 
@@ -224,7 +224,7 @@ export class MainSearchBar extends SearchBar {
     }
 
     report(value, searchBarhtmlName) { 
-        const filtRecipes = super.filter(value, searchBarhtmlName);
+        const filtRecipes = super.filter(value, searchBarhtmlName, this._data);
         let dropDownsDatas = this.getDropDownsDatas(filtRecipes);
 
         for (let attribute in dropDownsDatas) {
@@ -259,6 +259,7 @@ export class MainSearchBar extends SearchBar {
 export class DropDownSearchBar extends SearchBar {
     constructor(parent, htmlObject, name,data) {
         super(parent, htmlObject, name, data);
+        this._filtDatas = this._data;
         this._activeTags = [];
         this._dropDownIngredients = this._htmlObject.querySelector('#dropdown-ingredients');
         this._dropDownIngredients.parent = this;
@@ -330,8 +331,12 @@ export class DropDownSearchBar extends SearchBar {
         return this._activeTags;
     }
 
-    setData(datas) {
-        this._data = datas;
+    get data() {
+        return this._data;
+    }
+
+    setFiltData(datas) {
+        this._filtDatas = datas;
     }
 
 
@@ -476,12 +481,12 @@ export class DropDownSearchBar extends SearchBar {
         on failure returns an array with an error message 
         if value is undefined - case where we need all recipes - returned array equales */
 
-    filter(value, searchBarhtmlName) {
-        return super.filter(value, searchBarhtmlName);
+    filter(value, searchBarhtmlName, array) {
+        return super.filter(value, searchBarhtmlName, array);
     }
 
     report(value, searchBarhtmlName) { 
-        const filtRecipes = super.filter(value, searchBarhtmlName);
+        const filtRecipes = super.filter(value, searchBarhtmlName, this._data);
 
 
         let dropDownDatas = this.getDropDownDatas(filtRecipes, searchBarhtmlName, value);
@@ -494,7 +499,7 @@ export class DropDownSearchBar extends SearchBar {
     }
 
     getFiltRecipesAndTags(value, searchBarhtmlName) {
-        const filtRecipes = super.filter(value, searchBarhtmlName);
+        const filtRecipes = super.filter(value, searchBarhtmlName, this._filtDatas);
         let dropDownsDatas = this.getDropDownsDatas(filtRecipes);
 
         for (let attribute in dropDownsDatas) {

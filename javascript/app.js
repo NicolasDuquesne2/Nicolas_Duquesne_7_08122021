@@ -112,7 +112,7 @@ class App {
         this._dropDownGroup.removeActiveTag(tag.innerText);
         
         if (this._dropDownGroup.activeTags.length > 0) {
-
+            this._dropDownGroup.setFiltData(this._dropDownGroup.data);
             this._dropDownGroup.activeTags.forEach(tag => {
                 this.refreshFromMenuButton(tag.buttObj);
             });
@@ -143,7 +143,7 @@ class App {
 
         if (filtRecipes.recipes[0] != 'no recipe found') {
             if (searchBarhtmlName === 'main-search-bar') {
-                this._dropDownGroup.setData(filtRecipes.recipes);
+                this._dropDownGroup.setFiltData(filtRecipes.recipes);
                 this.displayCards(filtRecipes);
                 this.displayDropDowns(filtRecipes);
             } else if (searchBarhtmlName === 'input-ingredient') {
@@ -174,10 +174,10 @@ class App {
         this._cardsWrapper.innerHTML = '';
         this.displayCards(filtRecipes);
         this.displayDropDowns(filtRecipes);
-        this.displayTag(buttonValue, searchBarHtmlName);
-        this._dropDownGroup.setData(filtRecipes.recipes);
+        this._dropDownGroup.setFiltData(filtRecipes.recipes);
 
         if (!this._dropDownGroup.isInObjects(buttonValue, this._dropDownGroup.activeTags, 'tagName')) {
+            this.displayTag(buttonValue, searchBarHtmlName);
             this._dropDownGroup.addActiveTags({tagName: buttonValue, origin: searchBarHtmlName, buttObj: button});
         }
     }
