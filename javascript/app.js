@@ -14,6 +14,8 @@ class App {
         this._dropDownGroup = new DropDownSearchBar(this, document.querySelector('#dropdown-group'), 'dropDownGroup' ,recipes);
         this._cardsWrapper = document.querySelector("#cards-wrapper");
         this._filtDatas = null;
+        this._html = document.querySelector('.container');
+        this._html.addEventListener('click', this.resetDropDowns);
     }
 
     get searchBar() {
@@ -231,10 +233,31 @@ class App {
         
     }
 
-    /* switchButtons 
+    resetDropDowns(event) {
+        if (event.explicitOriginalTarget.nodeName != 'BUTTON' && event.explicitOriginalTarget.nodeName != 'INPUT' && event.explicitOriginalTarget.nodeName != 'IMG') {
+            const buttonsIds = [{id: '#button-1', dropdownId: '#dropdown-ingredients'}, 
+                            {id:'#button-2', dropdownId: '#dropdown-tools'}, 
+                            {id: '#button-3', dropdownId: '#dropdown-ustensils'}];
+
+            for (let i = 0; i < buttonsIds.length; i++) {
+                const button = document.querySelector(buttonsIds[i].id);
+                const dropDown = button.parentElement.querySelector(buttonsIds[i].dropdownId);
+                if (button.classList.contains('d-none')) {
+                    button.classList.remove('d-none');
+                }
+
+                if (!dropDown.classList.contains('d-none')){
+                    dropDown.classList.add('d-none');
+                }
+            }
+        }
+    }
+
+    /* main 
     arguments :
        void
     abastract :
+        launches the main page display
     */
 
     main () {
