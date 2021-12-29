@@ -1,6 +1,7 @@
 import { recipes } from "../data/recipes.js";
 import { DropDown } from "./templates/dropdown.js";
 import { TagButton } from "./templates/tagbutton.js";
+import { ErrorMessage } from "./templates/errormessage.js";
 import { MainSearchBar, SearchBar } from "./componants/searchbars.js";
 import { DropDownSearchBar } from "./componants/searchbars.js";
 import { Recipe } from "./model/recipe.js";
@@ -100,6 +101,18 @@ class App {
         template.build();
     }
 
+    /* displayErrorMessage 
+    arguments :
+        void
+    abastract :
+        launches the error message when no recipe has been found*/
+
+    displayErrorMessage(errorMessage) {
+        this._cardsWrapper.innerHTML = '';
+        const template = new ErrorMessage(errorMessage);
+        this._cardsWrapper.appendChild(template.build());
+    }
+
     /* deleteTag 
     arguments :
         tag - object
@@ -143,7 +156,14 @@ class App {
             filtRecipes = searchBar.report(searchBarHtmlValue, searchBarhtmlName);
         }
 
-        if (filtRecipes.recipes[0] != 'no recipe found') {
+        if (filtRecipes.recipes[0] != false) {
+
+            /* reset the cards wrapper justify content if necessary */
+            if (this._cardsWrapper.classList.contains('justify-content-center')) {
+                this._cardsWrapper.classList.remove('justify-content-center');
+                this._cardsWrapper.classList.add('justify-content-between', 'row-cols-md-3');
+            }
+
             if (searchBarhtmlName === 'main-search-bar') {
                 this._dropDownGroup.setFiltData(filtRecipes.recipes);
                 this.displayCards(filtRecipes);
@@ -156,6 +176,14 @@ class App {
                 this.displayDropDowns(filtRecipes);
             }
                 
+        } else {
+            /* change cards wrapper justify content to center the error message */
+            if (this._cardsWrapper.classList.contains('justify-content-between')) {
+                this._cardsWrapper.classList.remove('justify-content-between', 'row-cols-md-3');
+                this._cardsWrapper.classList.add('justify-content-center');
+            }
+            const  errorMessage = 'Aucune recette ne correspond à votre critère… vous pouvez chercher « tarte aux pommes », « poisson »';
+            this.displayErrorMessage(errorMessage);
         }
     }
 

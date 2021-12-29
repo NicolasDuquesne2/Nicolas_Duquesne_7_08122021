@@ -87,7 +87,7 @@ export class SearchBar {
     
             /* if the returned array is empty, a defaut error message is pushed */
             if (recipesFiltArr.length === 0) {
-                recipesFiltArr.push("no recipe found");
+                recipesFiltArr.push(false);
             }
         } else {
             recipesFiltArr = array;
@@ -227,10 +227,11 @@ export class MainSearchBar extends SearchBar {
         const filtRecipes = super.filter(value, searchBarhtmlName, this._data);
         let dropDownsDatas = this.getDropDownsDatas(filtRecipes);
 
-        for (let attribute in dropDownsDatas) {
-            dropDownsDatas[attribute] = super.getUniqueInArray(dropDownsDatas[attribute]);
+        if (filtRecipes[0] != false) {
+            for (let attribute in dropDownsDatas) {
+                dropDownsDatas[attribute] = super.getUniqueInArray(dropDownsDatas[attribute]);
+            }
         }
-
         return {recipes: filtRecipes, dropDownsItems: dropDownsDatas};
     }
 
@@ -485,25 +486,31 @@ export class DropDownSearchBar extends SearchBar {
         return super.filter(value, searchBarhtmlName, array);
     }
 
+
     report(value, searchBarhtmlName) { 
         const filtRecipes = super.filter(value, searchBarhtmlName, this._data);
-
-
         let dropDownDatas = this.getDropDownDatas(filtRecipes, searchBarhtmlName, value);
 
-        for (let attribute in dropDownDatas) {
-            dropDownDatas[attribute] = super.getUniqueInArray(dropDownDatas[attribute]);
+        if (filtRecipes[0] != false) {
+            for (let attribute in dropDownDatas) {
+                dropDownDatas[attribute] = super.getUniqueInArray(dropDownDatas[attribute]);
+            }
         }
 
         return {recipes: filtRecipes, dropDownsItems: dropDownDatas};
     }
 
+
+    
+
     getFiltRecipesAndTags(value, searchBarhtmlName) {
         const filtRecipes = super.filter(value, searchBarhtmlName, this._filtDatas);
         let dropDownsDatas = this.getDropDownsDatas(filtRecipes);
 
-        for (let attribute in dropDownsDatas) {
-            dropDownsDatas[attribute] = super.getUniqueInArray(dropDownsDatas[attribute]);
+        if (filtRecipes[0] != false) {
+            for (let attribute in dropDownsDatas) {
+                dropDownsDatas[attribute] = super.getUniqueInArray(dropDownsDatas[attribute]);
+            }
         }
 
         return {recipes: filtRecipes, dropDownsItems: dropDownsDatas};
