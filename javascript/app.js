@@ -156,7 +156,7 @@ class App {
             filtRecipes = searchBar.report(searchBarHtmlValue, searchBarhtmlName);
         }
 
-        if (filtRecipes.recipes[0] != false) {
+        if (filtRecipes.recipes.length > 0) {
 
             /* reset the cards wrapper justify content if necessary */
             if (this._cardsWrapper.classList.contains('justify-content-center')) {
@@ -168,11 +168,7 @@ class App {
                 this._dropDownGroup.setFiltData(filtRecipes.recipes);
                 this.displayCards(filtRecipes);
                 this.displayDropDowns(filtRecipes);
-            } else if (searchBarhtmlName === 'input-ingredient') {
-                this.displayDropDowns(filtRecipes);
-            } else if (searchBarhtmlName === 'input-tool') {
-                this.displayDropDowns(filtRecipes);
-            } else if (searchBarhtmlName === 'input-ustensil') {
+            } else {
                 this.displayDropDowns(filtRecipes);
             }
                 
@@ -215,7 +211,8 @@ class App {
     /* switchButtons 
     arguments :
         button - object
-    abastract :
+    abastract : this function show or hide dropdown groups according to drop down button pressed. Clicking on one button shows it's search drop down group, 
+    hides other drop downs groups and show other dropdown buttons 
     */
 
 
@@ -246,9 +243,10 @@ class App {
         button.classList.add('d-none');
         dropDown.classList.remove('d-none');
 
-        for (let i=0; i < othersDropDownButtons.length; i++) {
-            const otherDropDown =  othersDropDownButtons[i][0];
-            const otherButton = othersDropDownButtons[i][1];
+        othersDropDownButtons.forEach(otherDropDownButton => {
+            const otherDropDown =  otherDropDownButton[0];
+            const otherButton = otherDropDownButton[1];
+
             if (!otherDropDown.classList.contains('d-none')){
                 otherDropDown.classList.add('d-none')
             }
@@ -256,10 +254,15 @@ class App {
             if (otherButton.classList.contains('d-none')) {
                 otherButton.classList.remove('d-none');
             }
-        }
-
+        });
         
     }
+
+    /* resetDropDowns 
+    arguments :
+        event - object
+    abastract : hides all search dropdown and show all dropdown buttons
+    */
 
     resetDropDowns(event) {
         if (event.explicitOriginalTarget.nodeName != 'BUTTON' && event.explicitOriginalTarget.nodeName != 'INPUT' && event.explicitOriginalTarget.nodeName != 'IMG') {
@@ -267,9 +270,9 @@ class App {
                             {id:'#button-2', dropdownId: '#dropdown-tools'}, 
                             {id: '#button-3', dropdownId: '#dropdown-ustensils'}];
 
-            for (let i = 0; i < buttonsIds.length; i++) {
-                const button = document.querySelector(buttonsIds[i].id);
-                const dropDown = button.parentElement.querySelector(buttonsIds[i].dropdownId);
+            buttonsIds.forEach(buttonId => {
+                const button = document.querySelector(buttonId.id);
+                const dropDown = button.parentElement.querySelector(buttonId.dropdownId);
                 if (button.classList.contains('d-none')) {
                     button.classList.remove('d-none');
                 }
@@ -277,7 +280,7 @@ class App {
                 if (!dropDown.classList.contains('d-none')){
                     dropDown.classList.add('d-none');
                 }
-            }
+            });
         }
     }
 

@@ -18,77 +18,24 @@ export class SearchBar {
         For each sub search bars (applience, ingredients, ustensils), checks in ingredients or in applience or in ustensils
         need the searchBarhtmlName to checkout in right recipe attribute
         on success, returns an array with recipes found
-        on failure returns an array with an error message 
-        if value is undefined - case where we need all recipes - returned array equales */
+        if value is undefined - case where we need all recipes - returned array equales
+        array functions filter & includes are used to get recipes */
 
     filter(value, searchBarhtmlName, array) {
         let recipesFiltArr = [];
-        const pattern = new RegExp(value, 'i');
 
         if (value != null) {
-                /* for all recipe */
-            for (let recipe of array) {
-                let filterValueMatches = [];
-                /* loop in recipe attributes */
-                for (let attribute in recipe) {
-                    /* check in name, description & ingredients for the main search bar.
-                    ckecks in ingredients, appliance & ustensils for sub search bars(applience, ingredients, ustensils) 
-                    .feeds a boolean array and leaves the for loop when a true is pushed*/
-                    if (((attribute === 'name' || attribute === 'description') && searchBarhtmlName === 'main-search-bar') ||
-                    (attribute === 'appliance' && searchBarhtmlName === 'input-tool')) {
-                        const match = recipe[attribute].match(pattern);
-                        if (match) {
-                            filterValueMatches.push(true);
-                            break;
-                        } else {
-                            filterValueMatches.push(false);
-                        }
-                    /* both main search bar and sub search bar ingredients check in ingredient array */
-                    } else if (attribute === 'ingredients') {
-                        /* ingredients is an array */
-                        if (searchBarhtmlName === 'main-search-bar' || searchBarhtmlName === 'input-ingredient') {
-                            for (let ingredient of recipe[attribute]) {
-                                const str = ingredient.ingredient;
-                                const match = str.match(pattern);
-                                if (match){
-                                    filterValueMatches.push(true);
-                                    break;
-                                } else {
-                                    filterValueMatches.push(false);
-                                }
-                            }
-                        }
-                    } else if (attribute === 'ustensils' && searchBarhtmlName === 'input-ustensil') {
-                        const ustensilsArr = recipe[attribute];
-                        let string = '';
-                        let match = null;
-                        for (let i = 0; i < ustensilsArr.length; i++) {
-                            string = ustensilsArr[i];
-                            match = string.match(pattern);
-                            if (match) {
-                                filterValueMatches.push(true);
-                                break;
-                            } else {
-                                filterValueMatches.push(false);
-                            }
-                        }
-                    }
-                }
-                /* the recipe checked is pushed in the return array only if there is a true value in the boolean array */
-                if (filterValueMatches.length > 0) {
-                    for (let valueMatch of filterValueMatches) {
-                        if (valueMatch === true) {
-                            recipesFiltArr.push(recipe);
-                            break;
-                        }
-                    }
-                }
-            }
-    
-            /* if the returned array is empty, a defaut error message is pushed */
-            if (recipesFiltArr.length === 0) {
-                recipesFiltArr.push(false);
-            }
+               if(searchBarhtmlName === 'main-search-bar') {
+                   recipesFiltArr = array.filter(element => {
+                       return element.name.includes(value) || element.description.includes(value) || element.ingredients.filter(ingr => ingr.ingredient.includes(value)).length >0 ;
+                   });
+               } else if (searchBarhtmlName === 'input-ingredient') {
+                   recipesFiltArr = array.filter(element => element.ingredients.filter(ingr => ingr.ingredient.includes(value)).length > 0);
+               } else if (searchBarhtmlName === 'input-tool') {
+                   recipesFiltArr = array.filter(element => element.appliance.includes(value));
+               } else if (searchBarhtmlName === 'input-ustensils') {
+                recipesFiltArr = array.filter(element => element.ustensils.includes(value));
+               }
         } else {
             recipesFiltArr = array;
         }
@@ -96,77 +43,34 @@ export class SearchBar {
         return recipesFiltArr
     }
 
-        /* getUniqueInArray 
-    arguments :
-        data - array
-    abastract :
-        loops in the original array and check each unique datas array's value.
-        if there is no value from the original array in the unique datas array then
-        this value is pushed in the unique datas array*/
-
-    getUniqueInArray(data) {
-        const uniqueDatasArray = [];
-
-        for (let i = 0; i < data.length; i++) {
-            const pattern = new RegExp(data[i], 'i');
-            let duplicate = false;
-            for (let j = 0; j < uniqueDatasArray.length; j++) {
-                const item = uniqueDatasArray[j]
-                if (item.match(pattern)) {
-                    duplicate = true;
-                }
-            }
-
-            if (!duplicate) {
-                uniqueDatasArray.push(data[i]);
-            }
-        }
-
-        return uniqueDatasArray;
-    }
 
     /* getDropDownsDatas 
     arguments :
         data - array
     abastract :
-        loops in each recipe ingredients to get ingredients, applience and ustencils in separated arrays
-        then call the function getUniqueArray to eliminate duplicates from each arrays 
-        then returns an object*/
+       Uses Array.from() to get unique arrays elements*/
 
-    getDropDownsDatas(data) {
-        const ingredientsDatas = [];
-        const toolsDatas = [];
-        const ustensilesDatas = [];
-        let ingredientsArray = [];
-        let toolsArray = [];
-        let ustensilsArray = [];
-        let dropDownsDatasObj = null;
+    getDropDownsDatas(data) {  
+        let ingredientsDatas = [];
+        let toolsDatas = [];
+        let ustensilesDatas = [];  
+        let dropDownsDatasObj = {};
 
-        for (let recipe of data) {
-            for (let attribute in recipe) {
+        data.forEach(element => {
+            ingredientsDatas = Array.from(new Set(ingredientsDatas.concat(...element.ingredients.map(ingr => ingr.ingredient))));
+            toolsDatas = Array.from(new Set(toolsDatas.concat(element.appliance)));
+            ustensilesDatas = Array.from(new Set(ustensilesDatas.concat(...element.ustensils)));
+        });
 
-                if (attribute === 'ingredients') {
-                    for (let ingredient of recipe[attribute]) {
-                        ingredientsDatas.push(ingredient.ingredient)
-                    }
-                } else if (attribute === 'appliance') {
-                    toolsDatas.push(recipe[attribute]);
-                } else if (attribute === 'ustensils') {
-                    for (let ustensil of recipe[attribute]) {
-                        ustensilesDatas.push(ustensil);
-                    }
-                }
-            }
-        }
-
-        ingredientsDatas.length > 0 ? ingredientsArray = this.getUniqueInArray(ingredientsDatas): ingredientsArray = null;
-        toolsDatas.length > 0 ? toolsArray = this.getUniqueInArray(toolsDatas): toolsArray = null;
-        ustensilesDatas.length > 0 ? ustensilsArray = this.getUniqueInArray(ustensilesDatas): ustensilsArray = null;
-        dropDownsDatasObj =  { ingredients: ingredientsArray, tools: toolsArray, ustensils: ustensilsArray};
+        dropDownsDatasObj.ingredients = ingredientsDatas;
+        dropDownsDatasObj.tools = toolsDatas;
+        dropDownsDatasObj.ustensils = ustensilesDatas;
 
         return dropDownsDatasObj;
     }
 }
+
+/* Class MainSearchBar */
 
 
 export class MainSearchBar extends SearchBar {
@@ -199,18 +103,6 @@ export class MainSearchBar extends SearchBar {
         return super.filter(value, searchBarhtmlName, array);
     }
 
-     /* getUniqueInArray 
-    arguments :
-        data - array
-    abastract :
-        loops in the original array and check each unique datas array's value.
-        if there is no value from the original array in the unique datas array then
-        this value is pushed in the unique datas array*/
-
-    getUniqueInArray(data) {
-        return super.getUniqueInArray(data);
-    }
-
     /* getDropDownsDatas 
     arguments :
         data - array
@@ -226,17 +118,8 @@ export class MainSearchBar extends SearchBar {
     report(value, searchBarhtmlName) { 
         const filtRecipes = super.filter(value, searchBarhtmlName, this._data);
         let dropDownsDatas = this.getDropDownsDatas(filtRecipes);
-
-        if (filtRecipes[0] != false) {
-            for (let attribute in dropDownsDatas) {
-                dropDownsDatas[attribute] = super.getUniqueInArray(dropDownsDatas[attribute]);
-            }
-        }
         return {recipes: filtRecipes, dropDownsItems: dropDownsDatas};
     }
-
-
-
 
     /* onKeyUp 
     arguments :
@@ -256,6 +139,7 @@ export class MainSearchBar extends SearchBar {
 
 }
 
+/* Class DropDownSearchBar */
 
 export class DropDownSearchBar extends SearchBar {
     constructor(parent, htmlObject, name,data) {
@@ -352,13 +236,7 @@ export class DropDownSearchBar extends SearchBar {
 
     isInObjects(value, array, attr) {
         let isIn = false;
-        
-        for(let i = 0; i < array.length; i++) {
-            if (array[i][attr] === value) {
-                isIn = true;
-                break;
-            }
-        }
+        array.filter(object => object[attr].includes(value)).length > 0 ? isIn = true: isIn = false; 
         return isIn;
     }
 
@@ -413,44 +291,39 @@ export class DropDownSearchBar extends SearchBar {
         then returns an object*/
 
     getDropDownDatas(data, searchBarhtmlName, checkValue) {
-        const tagsArray = [];
-        let tagsArrayRet = [];
+        let transitArray = [];
+        let tagsArray = [];
         let dropDownsDatasObj = {};
 
-        const pattern = new RegExp(checkValue, 'i');
-        for (let i = 0; i < data.length; i++) {
-            for (let attribute in data[i]) {
-                if (attribute === 'ingredients' && searchBarhtmlName === 'input-ingredient') {
-                    for (let ingredient of data[i][attribute]) {
-                        if (ingredient.ingredient.match(pattern)) {
-                            tagsArray.push(ingredient.ingredient)
-                        }
-                    }
-                } else if (attribute === 'appliance' && searchBarhtmlName === 'input-tool') {
-                    if (data[i][attribute].match(pattern)) {
-                        tagsArray.push(data[i][attribute]);
-                    }
-                } else if (attribute === 'ustensils' && searchBarhtmlName === 'input-ustensil') {
-                    for (let ustensil of data[i][attribute]) {
-                        if (ustensil.match(pattern)){
-                            tagsArray.push(ustensil);
-                        }
-                    }
-                }
+        if(searchBarhtmlName === 'input-ingredient') {
+            data.forEach(element => {
+                transitArray = Array.from(new Set(transitArray.concat(...element.ingredients.map(ingr => ingr.ingredient))));
+            });
+        } else if (searchBarhtmlName === 'input-tool') {
+            data.forEach(element => {
+                transitArray = Array.from(new Set(transitArray.concat(element.appliance)));
+            });
+        } else if (searchBarhtmlName === 'input-ustensil') {
+            data.forEach(element => {
+                transitArray = Array.from(new Set(transitArray.concat(...element.ustensils)));
+            });
+        } 
+
+        tagsArray = transitArray.filter(ingr => {
+            if (ingr.includes(checkValue)) {
+                return ingr;
             }
-        }
-        
-        tagsArray.length > 0 ? tagsArrayRet = this.getUniqueInArray(tagsArray): tagsArrayRet = null;
+        });
 
         switch (searchBarhtmlName) {
             case 'input-ingredient':
-                dropDownsDatasObj = {ingredients: tagsArrayRet};
+                dropDownsDatasObj = {ingredients: tagsArray};
                 break;
             case 'input-tool':
-                dropDownsDatasObj = {tools: tagsArrayRet};
+                dropDownsDatasObj = {tools: tagsArray};
                 break;
             case 'input-ustensil':
-                dropDownsDatasObj = {ustensils: tagsArrayRet};
+                dropDownsDatasObj = {ustensils: tagsArray};
                 break;
             default:
         }
@@ -490,13 +363,6 @@ export class DropDownSearchBar extends SearchBar {
     report(value, searchBarhtmlName) { 
         const filtRecipes = super.filter(value, searchBarhtmlName, this._data);
         let dropDownDatas = this.getDropDownDatas(filtRecipes, searchBarhtmlName, value);
-
-        if (filtRecipes[0] != false) {
-            for (let attribute in dropDownDatas) {
-                dropDownDatas[attribute] = super.getUniqueInArray(dropDownDatas[attribute]);
-            }
-        }
-
         return {recipes: filtRecipes, dropDownsItems: dropDownDatas};
     }
 
@@ -506,13 +372,6 @@ export class DropDownSearchBar extends SearchBar {
     getFiltRecipesAndTags(value, searchBarhtmlName) {
         const filtRecipes = super.filter(value, searchBarhtmlName, this._filtDatas);
         let dropDownsDatas = this.getDropDownsDatas(filtRecipes);
-
-        if (filtRecipes[0] != false) {
-            for (let attribute in dropDownsDatas) {
-                dropDownsDatas[attribute] = super.getUniqueInArray(dropDownsDatas[attribute]);
-            }
-        }
-
         return {recipes: filtRecipes, dropDownsItems: dropDownsDatas};
 
     }
