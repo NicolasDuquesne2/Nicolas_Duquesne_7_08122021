@@ -27,20 +27,22 @@ export class SearchBar {
         if (value != null) {
                if(searchBarhtmlName === 'main-search-bar') {
                    recipesFiltArr = array.filter(element => {
-                       return element.name.includes(value) || element.description.includes(value) || element.ingredients.filter(ingr => ingr.ingredient.includes(value)).length >0 ;
+                       return element.name.toLowerCase().includes(value.toLowerCase()) 
+                       || element.description.toLowerCase().includes(value.toLowerCase()) 
+                       || element.ingredients.filter(ingr => ingr.ingredient.toLowerCase().includes(value.toLowerCase())).length >0 ;
                    });
                } else if (searchBarhtmlName === 'input-ingredient') {
-                   recipesFiltArr = array.filter(element => element.ingredients.filter(ingr => ingr.ingredient.includes(value)).length > 0);
+                   recipesFiltArr = array.filter(element => element.ingredients.filter(ingr => ingr.ingredient.toLowerCase().includes(value.toLowerCase())).length > 0);
                } else if (searchBarhtmlName === 'input-tool') {
-                   recipesFiltArr = array.filter(element => element.appliance.includes(value));
+                   recipesFiltArr = array.filter(element => element.appliance.toLowerCase().includes(value.toLowerCase()));
                } else if (searchBarhtmlName === 'input-ustensils') {
-                recipesFiltArr = array.filter(element => element.ustensils.includes(value));
+                recipesFiltArr = array.filter(element => element.ustensils.toLowerCase().includes(value.toLowerCase()));
                }
         } else {
             recipesFiltArr = array;
         }
 
-        return recipesFiltArr
+        return recipesFiltArr;
     }
 
 
@@ -236,7 +238,7 @@ export class DropDownSearchBar extends SearchBar {
 
     isInObjects(value, array, attr) {
         let isIn = false;
-        array.filter(object => object[attr].includes(value)).length > 0 ? isIn = true: isIn = false; 
+        array.filter(object => object[attr].toLowerCase().includes(value.toLowerCase())).length > 0 ? isIn = true: isIn = false; 
         return isIn;
     }
 
