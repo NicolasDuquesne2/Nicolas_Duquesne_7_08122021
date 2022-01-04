@@ -176,7 +176,7 @@ class App {
                 this.displayDropDowns(filtRecipes);
             }
                 
-        } else {
+        } else  if (filtRecipes.recipes[0] = false  && searchBarhtmlName != 'main-search-bar'){
             /* change cards wrapper justify content to center the error message */
             if (this._cardsWrapper.classList.contains('justify-content-between')) {
                 this._cardsWrapper.classList.remove('justify-content-between', 'row-cols-md-3');
