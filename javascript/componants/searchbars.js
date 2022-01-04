@@ -312,7 +312,7 @@ export class DropDownSearchBar extends SearchBar {
         } 
 
         tagsArray = transitArray.filter(ingr => {
-            if (ingr.includes(checkValue)) {
+            if (ingr.toLowerCase().includes(checkValue.toLowerCase())) {
                 return ingr;
             }
         });
