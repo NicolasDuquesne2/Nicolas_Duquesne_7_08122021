@@ -29,7 +29,7 @@ export class RecipCard {
                                 <div class="col">
                                     <p class="text-left tiny-font">`;
         this._recipe.ingredients.forEach(element => {
-            htmlCard += `<span class="font-weight-bolder">${element.ingredient} ${element.quantity ? ' : ' : ''} </span>${element.quantity ? String(element.quantity) : ''} ${element.unit ? element.unit : ''}<br>`
+            htmlCard += `<span class="font-weight-bolder">${element.ingredient} ${element.quantity ? ' : ' : ''} </span>${element.quantity ? String(element.quantity) : ''} ${element.unit ? element.unit : ''}<br>`;
         });
         htmlCard +=                 `</p>
                                 </div>
