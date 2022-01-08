@@ -15,7 +15,7 @@ export class TagButton {
         button.classList.add('btn', this._styles.bgColor, this._styles.fontColor);
         button.addEventListener('click', this.onClick);
         const innerImage = document.createElement('img');
-        innerImage.src ='/image/circlecrossvect.svg';
+        innerImage.src ='image/circlecrossvect.svg';
         button.appendChild(innerImage);
         tagWrapper.appendChild(button);
         this._wrapper.appendChild(tagWrapper);

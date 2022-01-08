@@ -250,7 +250,7 @@ class App {
             const otherDropDown =  othersDropDownButtons[i][0];
             const otherButton = othersDropDownButtons[i][1];
             if (!otherDropDown.classList.contains('d-none')){
-                otherDropDown.classList.add('d-none')
+                otherDropDown.classList.add('d-none');
             }
 
             if (otherButton.classList.contains('d-none')) {
