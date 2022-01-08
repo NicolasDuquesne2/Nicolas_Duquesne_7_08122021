@@ -1,11 +1,11 @@
-import { recipes } from "data/recipes.js";
-import { DropDown } from "javascript/templates/dropdown.js";
-import { TagButton } from "javascript/templates/tagbutton.js";
-import { ErrorMessage } from "javascript/templates/errormessage.js";
-import { MainSearchBar, SearchBar } from "javascript/componants/searchbars.js";
-import { DropDownSearchBar } from "javascript/componants/searchbars.js";
-import { Recipe } from "javascript/model/recipe.js";
-import { RecipCard } from "javascript/templates/recipcard.js";
+import { recipes } from "/data/recipes.js";
+import { DropDown } from "/javascript/templates/dropdown.js";
+import { TagButton } from "/javascript/templates/tagbutton.js";
+import { ErrorMessage } from "/javascript/templates/errormessage.js";
+import { MainSearchBar, SearchBar } from "/javascript/componants/searchbars.js";
+import { DropDownSearchBar } from "/javascript/componants/searchbars.js";
+import { Recipe } from "/javascript/model/recipe.js";
+import { RecipCard } from "/javascript/templates/recipcard.js";
 
 class App {
     constructor() {
