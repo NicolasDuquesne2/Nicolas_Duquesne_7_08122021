@@ -20,7 +20,7 @@ export class RecipCard {
                                 </div>
                                 <div class="col normal-font">
                                     <p class="text-right">
-                                        <img src="/image/clockvect.svg" alt="temps préparation">
+                                        <img src="image/clockvect.svg" alt="temps préparation">
                                         <span class="font-weight-bolder">${this._recipe.time}</span>
                                     </p>
                                 </div>
