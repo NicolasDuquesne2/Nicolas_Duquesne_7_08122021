@@ -1,3 +1,5 @@
+/* Elements classes */
+
 body {
     font-family: 'Lato', sans-serif !important;
 }
@@ -27,6 +29,54 @@ body {
     display: none !important;
 }
 
+#input-ingredient:focus, #input-tool:focus, #input-ustensil:focus {
+    color: white;
+}
+
+.btn:hover {
+    color: white;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: white !important;
+    opacity: 0.5 !important ; /* Firefox */
+}
+
+.text-trunc {
+    overflow: hidden !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 7 !important;
+    -webkit-box-orient: vertical !important;
+    background:#fff !important;
+}
+
+.img-inv {
+    transform: rotateX(190deg) !important;
+}
+
+.dropdown-menu.show {
+    display: flex;
+    flex-wrap: wrap !important;
+    top: 98% !important;
+    transform: unset !important;
+    width: 100%;
+}
+
+.dropdown-item {
+    width: 33% !important;
+    white-space:normal !important;
+}
+
+.dropdown-item:hover {
+    background-color: unset !important;
+}
+
+.dropdown-menu > button {
+    color: white !important;
+}
+
+/* Color classes */
+
 .bg-blue {
     background: #3282F7 !important;
 }
@@ -38,6 +88,9 @@ body {
 .bg-light-red {
     background: #ED6454 !important;
 }
+
+
+/* Font classes */
 
 .font-color-white {
     color: white;
@@ -59,37 +112,7 @@ body {
     line-height: 1 !important;
 }
 
-.text-trunc {
-    overflow: hidden !important;
-    display: -webkit-box !important;
-    -webkit-line-clamp: 7 !important;
-    -webkit-box-orient: vertical !important;
-    background:#fff !important;
-}
-
-.img-inv {
-    transform: rotateX(190deg) !important;
-}
-
-.dropdown-menu.show {
-    display: flex;
-    flex-wrap: wrap !important;
-    top: 98% !important;
-    transform: unset !important;
-}
-
-.dropdown-item {
-    width: 33% !important;
-    white-space:normal !important;
-}
-
-.dropdown-item:hover {
-    background-color: unset !important;
-}
-
-.dropdown-menu > button {
-    color: white !important;
-}
+/* Border classes */
 
 .border-bottum-rounded {
     border-bottom-left-radius: .25rem !important;
