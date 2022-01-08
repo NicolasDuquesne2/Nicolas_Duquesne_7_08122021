@@ -199,7 +199,7 @@ export class DropDownSearchBar extends SearchBar {
     }
 
     get ustensilsButt() {
-        return this._ustensilsButt
+        return this._ustensilsButt;
     }
 
     get dropDownIngredients() {

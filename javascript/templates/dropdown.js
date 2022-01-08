@@ -1,7 +1,7 @@
 export class DropDown {
     constructor(data, wrapper) {
         this._tags = data;
-        this._wrapper = wrapper
+        this._wrapper = wrapper;
         this._dropDownParent = wrapper.parentElement.parentElement.parent;
     }
 
