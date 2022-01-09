@@ -35,8 +35,8 @@ export class SearchBar {
                    recipesFiltArr = array.filter(element => element.ingredients.filter(ingr => ingr.ingredient.toLowerCase().includes(value.toLowerCase())).length > 0);
                } else if (searchBarhtmlName === 'input-tool') {
                    recipesFiltArr = array.filter(element => element.appliance.toLowerCase().includes(value.toLowerCase()));
-               } else if (searchBarhtmlName === 'input-ustensils') {
-                recipesFiltArr = array.filter(element => element.ustensils.toLowerCase().includes(value.toLowerCase()));
+               } else if (searchBarhtmlName === 'input-ustensil') {
+                recipesFiltArr = array.filter(element => element.ustensils.map(str => str.toLowerCase()).includes(value.toLowerCase()));
                }
         } else {
             recipesFiltArr = array;
