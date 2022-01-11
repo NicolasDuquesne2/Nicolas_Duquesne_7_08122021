@@ -49,7 +49,7 @@ class App {
         this._dropDownGroup.dropDownTools.querySelector('.dropdown-menu').innerHTML = '';
         this._dropDownGroup.dropDownUstensils.querySelector('.dropdown-menu').innerHTML = '';
 
-        if (reportObject[0] != false) {
+        if (reportObject.recipes[0] != false) {
             for (let dropdownData in reportObject.dropDownsItems) {
                 let wrapper = null;
                 let template = null;
@@ -182,7 +182,7 @@ class App {
                 this._cardsWrapper.classList.add('justify-content-center');
             }
             const  errorMessage = 'Aucune recette ne correspond à votre critère… vous pouvez chercher « tarte aux pommes », « poisson »';
-            this.displayDropDowns(filtRecipes.recipes);
+            this.displayDropDowns(filtRecipes);
             this.displayErrorMessage(errorMessage);
         }
     }
