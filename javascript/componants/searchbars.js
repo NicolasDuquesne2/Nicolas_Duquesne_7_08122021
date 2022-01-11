@@ -42,6 +42,9 @@ export class SearchBar {
             recipesFiltArr = array;
         }
 
+        if (recipesFiltArr.length === 0) {
+            recipesFiltArr.push(false);
+        }
         return recipesFiltArr;
     }
 
@@ -58,15 +61,17 @@ export class SearchBar {
         let ustensilesDatas = [];  
         let dropDownsDatasObj = {};
 
-        data.forEach(element => {
-            ingredientsDatas = Array.from(new Set(ingredientsDatas.concat(...element.ingredients.map(ingr => ingr.ingredient))));
-            toolsDatas = Array.from(new Set(toolsDatas.concat(element.appliance)));
-            ustensilesDatas = Array.from(new Set(ustensilesDatas.concat(...element.ustensils)));
-        });
-
-        dropDownsDatasObj.ingredients = ingredientsDatas;
-        dropDownsDatasObj.tools = toolsDatas;
-        dropDownsDatasObj.ustensils = ustensilesDatas;
+        if(data[0] != false) {
+            data.forEach(element => {
+                ingredientsDatas = Array.from(new Set(ingredientsDatas.concat(...element.ingredients.map(ingr => ingr.ingredient))));
+                toolsDatas = Array.from(new Set(toolsDatas.concat(element.appliance)));
+                ustensilesDatas = Array.from(new Set(ustensilesDatas.concat(...element.ustensils)));
+            });
+    
+            dropDownsDatasObj.ingredients = ingredientsDatas;
+            dropDownsDatasObj.tools = toolsDatas;
+            dropDownsDatasObj.ustensils = ustensilesDatas;
+        }
 
         return dropDownsDatasObj;
     }
