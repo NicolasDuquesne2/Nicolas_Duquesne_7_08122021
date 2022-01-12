@@ -6,7 +6,7 @@ export class RecipCard {
     build() {
 
         const wrapper = document.createElement('div');
-        wrapper.classList.add('card', 'shadow-sm', 'mb-4');
+        wrapper.classList.add('card', 'shadow-sm', 'mb-4', 'mw-md-48', 'mw-xl-380');
         wrapper.style.maxWidth = '380px';
 
         let htmlCard = '';
