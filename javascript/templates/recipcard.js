@@ -7,8 +7,6 @@ export class RecipCard {
 
         const wrapper = document.createElement('div');
         wrapper.classList.add('card', 'shadow-sm', 'mb-4', 'mw-md-48', 'mw-xl-380');
-        wrapper.style.maxWidth = '380px';
-
         let htmlCard = '';
         htmlCard += `   <img class="h-50" src="https://via.placeholder.com/150" alt="">
                         <div class="card-body ">
