@@ -417,42 +417,45 @@ export class DropDownSearchBar extends SearchBar {
         let tagsArrayRet = [];
         let dropDownsDatasObj = {};
 
-        const pattern = new RegExp(checkValue, 'i');
-        for (let i = 0; i < data.length; i++) {
-            for (let attribute in data[i]) {
-                if (attribute === 'ingredients' && searchBarhtmlName === 'input-ingredient') {
-                    for (let ingredient of data[i][attribute]) {
-                        if (ingredient.ingredient.match(pattern)) {
-                            tagsArray.push(ingredient.ingredient)
+        if (data[0] != false) {
+
+            const pattern = new RegExp(checkValue, 'i');
+            for (let i = 0; i < data.length; i++) {
+                for (let attribute in data[i]) {
+                    if (attribute === 'ingredients' && searchBarhtmlName === 'input-ingredient') {
+                        for (let ingredient of data[i][attribute]) {
+                            if (ingredient.ingredient.match(pattern)) {
+                                tagsArray.push(ingredient.ingredient)
+                            }
                         }
-                    }
-                } else if (attribute === 'appliance' && searchBarhtmlName === 'input-tool') {
-                    if (data[i][attribute].match(pattern)) {
-                        tagsArray.push(data[i][attribute]);
-                    }
-                } else if (attribute === 'ustensils' && searchBarhtmlName === 'input-ustensil') {
-                    for (let ustensil of data[i][attribute]) {
-                        if (ustensil.match(pattern)){
-                            tagsArray.push(ustensil);
+                    } else if (attribute === 'appliance' && searchBarhtmlName === 'input-tool') {
+                        if (data[i][attribute].match(pattern)) {
+                            tagsArray.push(data[i][attribute]);
+                        }
+                    } else if (attribute === 'ustensils' && searchBarhtmlName === 'input-ustensil') {
+                        for (let ustensil of data[i][attribute]) {
+                            if (ustensil.match(pattern)){
+                                tagsArray.push(ustensil);
+                            }
                         }
                     }
                 }
             }
-        }
         
-        tagsArray.length > 0 ? tagsArrayRet = this.getUniqueInArray(tagsArray): tagsArrayRet = null;
+            tagsArray.length > 0 ? tagsArrayRet = this.getUniqueInArray(tagsArray): tagsArrayRet = null;
 
-        switch (searchBarhtmlName) {
-            case 'input-ingredient':
-                dropDownsDatasObj = {ingredients: tagsArrayRet};
-                break;
-            case 'input-tool':
-                dropDownsDatasObj = {tools: tagsArrayRet};
-                break;
-            case 'input-ustensil':
-                dropDownsDatasObj = {ustensils: tagsArrayRet};
-                break;
-            default:
+            switch (searchBarhtmlName) {
+                case 'input-ingredient':
+                    dropDownsDatasObj = {ingredients: tagsArrayRet};
+                    break;
+                case 'input-tool':
+                    dropDownsDatasObj = {tools: tagsArrayRet};
+                    break;
+                case 'input-ustensil':
+                    dropDownsDatasObj = {ustensils: tagsArrayRet};
+                    break;
+                default:
+            }
         }
 
         return dropDownsDatasObj;

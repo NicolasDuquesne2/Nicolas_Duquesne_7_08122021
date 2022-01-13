@@ -45,9 +45,6 @@ class App {
         for each drop down tags lists found, matching drop downs are build with list and a template */
 
     displayDropDowns(reportObject) {
-        this._dropDownGroup.dropDownIngredients.querySelector('.dropdown-menu').innerHTML = '';
-        this._dropDownGroup.dropDownTools.querySelector('.dropdown-menu').innerHTML = '';
-        this._dropDownGroup.dropDownUstensils.querySelector('.dropdown-menu').innerHTML = '';
         
         if (reportObject.recipes[0] != false) {
             for (let dropdownData in reportObject.dropDownsItems) {
@@ -55,21 +52,28 @@ class App {
                 let template = null;
                 switch (dropdownData) {
                     case 'ingredients':
-                         wrapper = this._dropDownGroup.dropDownIngredients.querySelector('.dropdown-menu');
-                         template = new DropDown(reportObject.dropDownsItems[dropdownData], wrapper);
-                         break
+                        this._dropDownGroup.dropDownIngredients.querySelector('.dropdown-menu').innerHTML = '';
+                        wrapper = this._dropDownGroup.dropDownIngredients.querySelector('.dropdown-menu');
+                        template = new DropDown(reportObject.dropDownsItems[dropdownData], wrapper);
+                        break
                      case 'tools':
-                         wrapper = this._dropDownGroup.dropDownTools.querySelector('.dropdown-menu');
-                         template = new DropDown(reportObject.dropDownsItems[dropdownData], wrapper);
-                         break
+                        this._dropDownGroup.dropDownTools.querySelector('.dropdown-menu').innerHTML = '';
+                        wrapper = this._dropDownGroup.dropDownTools.querySelector('.dropdown-menu');
+                        template = new DropDown(reportObject.dropDownsItems[dropdownData], wrapper);
+                        break
                      case 'ustensils':
-                         wrapper = this._dropDownGroup.dropDownUstensils.querySelector('.dropdown-menu');
-                         template = new DropDown(reportObject.dropDownsItems[dropdownData], wrapper);
-                         break
+                        this._dropDownGroup.dropDownUstensils.querySelector('.dropdown-menu').innerHTML = '';
+                        wrapper = this._dropDownGroup.dropDownUstensils.querySelector('.dropdown-menu');
+                        template = new DropDown(reportObject.dropDownsItems[dropdownData], wrapper);
+                        break
                      default:
                 }
                 template.build();
             }
+        } else {
+            this._dropDownGroup.dropDownIngredients.querySelector('.dropdown-menu').innerHTML = '';
+            this._dropDownGroup.dropDownTools.querySelector('.dropdown-menu').innerHTML = '';
+            this._dropDownGroup.dropDownUstensils.querySelector('.dropdown-menu').innerHTML = '';
         }
     }
 
@@ -188,6 +192,12 @@ class App {
             const  errorMessage = 'Aucune recette ne correspond à votre critère… vous pouvez chercher « tarte aux pommes », « poisson »';
             this.displayDropDowns(filtRecipes);
             this.displayErrorMessage(errorMessage);
+        } else  if (filtRecipes.recipes[0] === false  && searchBarhtmlName === 'input-ingredient') {
+            this._dropDownGroup.dropDownIngredients.querySelector('.dropdown-menu').innerHTML = '';
+        } else  if (filtRecipes.recipes[0] === false  && searchBarhtmlName === 'input-tool') {
+            this._dropDownGroup.dropDownTools.querySelector('.dropdown-menu').innerHTML = '';
+        } else  if (filtRecipes.recipes[0] === false  && searchBarhtmlName === 'input-ustensil') {
+            this._dropDownGroup.dropDownUstensils.querySelector('.dropdown-menu').innerHTML = '';
         }
     }
 
