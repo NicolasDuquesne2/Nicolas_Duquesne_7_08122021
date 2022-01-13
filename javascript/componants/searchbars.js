@@ -302,37 +302,39 @@ export class DropDownSearchBar extends SearchBar {
         let tagsArray = [];
         let dropDownsDatasObj = {};
 
-        if(searchBarhtmlName === 'input-ingredient') {
-            data.forEach(element => {
-                transitArray = Array.from(new Set(transitArray.concat(...element.ingredients.map(ingr => ingr.ingredient))));
+        if (data[0] != false) {
+            if(searchBarhtmlName === 'input-ingredient') {
+                data.forEach(element => {
+                    transitArray = Array.from(new Set(transitArray.concat(...element.ingredients.map(ingr => ingr.ingredient))));
+                });
+            } else if (searchBarhtmlName === 'input-tool') {
+                data.forEach(element => {
+                    transitArray = Array.from(new Set(transitArray.concat(element.appliance)));
+                });
+            } else if (searchBarhtmlName === 'input-ustensil') {
+                data.forEach(element => {
+                    transitArray = Array.from(new Set(transitArray.concat(...element.ustensils)));
+                });
+            } 
+    
+            tagsArray = transitArray.filter(ingr => {
+                if (ingr.toLowerCase().includes(checkValue.toLowerCase())) {
+                    return ingr;
+                }
             });
-        } else if (searchBarhtmlName === 'input-tool') {
-            data.forEach(element => {
-                transitArray = Array.from(new Set(transitArray.concat(element.appliance)));
-            });
-        } else if (searchBarhtmlName === 'input-ustensil') {
-            data.forEach(element => {
-                transitArray = Array.from(new Set(transitArray.concat(...element.ustensils)));
-            });
-        } 
-
-        tagsArray = transitArray.filter(ingr => {
-            if (ingr.toLowerCase().includes(checkValue.toLowerCase())) {
-                return ingr;
+    
+            switch (searchBarhtmlName) {
+                case 'input-ingredient':
+                    dropDownsDatasObj = {ingredients: tagsArray};
+                    break;
+                case 'input-tool':
+                    dropDownsDatasObj = {tools: tagsArray};
+                    break;
+                case 'input-ustensil':
+                    dropDownsDatasObj = {ustensils: tagsArray};
+                    break;
+                default:
             }
-        });
-
-        switch (searchBarhtmlName) {
-            case 'input-ingredient':
-                dropDownsDatasObj = {ingredients: tagsArray};
-                break;
-            case 'input-tool':
-                dropDownsDatasObj = {tools: tagsArray};
-                break;
-            case 'input-ustensil':
-                dropDownsDatasObj = {ustensils: tagsArray};
-                break;
-            default:
         }
 
         return dropDownsDatasObj;
